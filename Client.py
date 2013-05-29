@@ -1,6 +1,6 @@
 from Tkinter import *
 import tkMessageBox
-from PIL import Image, ImageTk
+import Image, ImageTk
 import socket, threading, sys, traceback, os
 
 from RtpPacket import RtpPacket
@@ -96,6 +96,7 @@ class Client:
             try:
                 data = self.rtpSocket.recv(20480)
                 if data:
+
                     rtpPacket = RtpPacket()
                     rtpPacket.decode(data)
                     
@@ -264,7 +265,7 @@ class Client:
         # TO COMPLETE
         #-------------
         # Create a new datagram socket to receive RTP packets from the server
-        self.rtpSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.rtpSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
           
         
         # Set the timeout value of the socket to 0.5sec
@@ -273,6 +274,7 @@ class Client:
         try:
             # Bind the socket to the address using the RTP port given by the client user
             self.rtpSocket.bind(('', self.rtpPort))
+            print "rtp-socket bound to PORT=%d" %self.rtpPort
 
         except:
            tkMessageBox.showwarning('Unable to Bind', 'Unable to bind PORT=%d' %self.rtpPort)
