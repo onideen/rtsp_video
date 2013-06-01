@@ -28,15 +28,17 @@ class TrafficSimulator:
         startTime = time.time()
 
         self.UDPSocket = socket(AF_INET,SOCK_DGRAM)
-        
+        wait = 1.0/self.packetsPerSecond  
         packetNumber = 0
         while time.time() - startTime < self.runningTime:
-            
+            t1 = time.time()
             packetNumber = packetNumber + 1
             payload = self.makePayload(packetNumber)
             self.UDPSocket.sendto(payload, (self.serverHost,self.serverPort))
+            t2= time.time()
 
-            time.sleep(1.0/self.packetsPerSecond)
+
+            #time.sleep( wait - (t2-t1))
 
         print "Packets sent: %d"%packetNumber
 
