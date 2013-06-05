@@ -25,18 +25,22 @@ class TrafficSimulator:
         self.payloadSizeInBytes = int(payloadSizeInBytes)
         self.runningTime = int(runningTime)
 
-        startTime = time.time()
-
-        self.UDPSocket = socket(AF_INET,SOCK_DGRAM)
         wait = 1.0/self.packetsPerSecond  
+        self.UDPSocket = socket(AF_INET,SOCK_DGRAM)
+
+
+        startTime = time.time()
+        lastTime = startTime;
         packetNumber = 0
         while time.time() - startTime < self.runningTime:
-            t1 = time.time()
+            if time.time() - lastTime < wait:
+                continue
+
+            lastTime = time.time()
             packetNumber = packetNumber + 1
             payload = self.makePayload(packetNumber)
             self.UDPSocket.sendto(payload, (self.serverHost,self.serverPort))
-            t2= time.time()
-
+            
 
             #time.sleep( wait - (t2-t1))
 
