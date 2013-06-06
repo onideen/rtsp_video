@@ -17,7 +17,7 @@ while 1:
 		print "Empty packet."
 	else:
 		dataAmount = len(data)
-		words = string.split(data,".",1)
+		words = string.split(data,":",1)
 		if len(words) > 0:
 			print "Received UDP packet of size " + str(dataAmount) + " from student " + words[0] + " at IP " + str(addr)
 		else:

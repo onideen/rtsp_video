@@ -33,7 +33,7 @@ class TrafficSimulator:
         lastTime = startTime;
         packetNumber = 0
         while time.time() - startTime < self.runningTime:
-            if time.time() - lastTime < wait:
+            if packetNumber > 0 and time.time() - lastTime < wait:
                 continue
 
             lastTime = time.time()
